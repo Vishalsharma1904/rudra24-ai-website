@@ -385,6 +385,7 @@ transition:opacity 220ms ease,translate 420ms var(--spring-snappy),scale 420ms v
 .menu-panel.mega{left:50%;right:auto;transform:translateX(-50%);transform-origin:50% 0;width:540px;top:calc(100% + 12px);
 transition:opacity 240ms ease,translate 380ms var(--spring-soft),scale 380ms var(--spring-soft)}
 .menu-panel.mega.mini{width:300px}
+.menu-panel.mega{max-height:calc(100dvh - 80px);overflow-y:auto;overscroll-behavior:contain}
 @starting-style{.nav-menu[open] .menu-panel.mega{opacity:0;translate:0 -6px;scale:.98}}
 .nav-menu[open] .menu-panel.mega{opacity:1;translate:0 0;scale:1}
 .nav-menu.is-closing .menu-panel.mega{opacity:0;translate:0 -4px;scale:.99;transition-duration:200ms}
@@ -452,7 +453,7 @@ main>section.closing{border-top:0}
 .app-tool .icon,.app-run .icon{width:14px;height:14px}
 .app-run{display:inline-flex;align-items:center;gap:7px;margin-left:6px;padding:7px 14px;border-radius:9px;border:1px solid rgba(255,255,235,.28);background:rgba(255,255,235,.08);color:#FFFFEB;font:inherit;font-size:12.5px;cursor:pointer;transition:background-color 220ms ease,border-color 220ms ease}
 .app-run:hover{background:rgba(255,255,235,.18);border-color:rgba(255,255,235,.45)}
-.app-window .app-shell-body{display:grid;grid-template-columns:var(--side,212px) minmax(0,1fr);transition:grid-template-columns 560ms var(--spring-soft)}
+.app-window .app-shell-body{position:relative;display:grid;grid-template-columns:var(--side,196px) minmax(0,1fr);transition:grid-template-columns 560ms var(--spring-soft)}
 .app-window.is-collapsed .app-shell-body{--side:64px}
 .app-sidebar{display:flex;flex-direction:column;min-width:0;overflow:hidden;padding:12px 10px 14px;background:var(--app-shell);color:#FFFFEB}
 .app-side-nav{display:flex;flex-direction:column;gap:2px}
@@ -518,7 +519,7 @@ main>section.closing{border-top:0}
 .app-view.is-entering .app-stat:nth-child(2){animation-delay:70ms}
 .app-view.is-entering .app-stat:nth-child(3){animation-delay:140ms}
 @media(max-width:1000px){.app-tool{display:none}}
-@media(max-width:760px){.app-window .app-shell-body{display:grid;--side:58px}.app-sidebar .app-nav-item span,.app-sidebar .app-side-foot span,.app-nav-group{display:none}.app-nav-item{padding-inline:10.5px}.app-side-foot{padding-inline:10.5px}[data-app-collapse]{display:none}.app-view:not(.demo-body){padding:22px 18px}.app-stats,.app-two{grid-template-columns:1fr}.app-run{display:none}}
+@media(max-width:760px){.app-stats,.app-two{grid-template-columns:1fr}.app-run{display:none}}
 
 /* ── Lead map: an open map with rounded corners and a soft shadow — no frame around it ── */
 .map-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px}
@@ -639,12 +640,40 @@ main>section.closing{border-top:0}
 
 /* ── Live app preview: a little smaller, centred ── */
 .workspace-tour .app-window,.workspace-tour .below-demo{max-width:1060px;margin-inline:auto}
-.app-window .app-shell-body{--side:196px}
-.app-window.is-collapsed .app-shell-body{--side:64px}
 .app-nav-item{font-size:13px;padding-block:8px}
 .app-main .demo-heading h3,.app-view-head h3{font-size:25px}
 .app-main .demo-body{padding:26px 28px}
 .app-stat b{font-size:30px}
+.table-scroll{max-width:100%;overflow-x:auto;overscroll-behavior-x:contain}
+.table-scroll:focus-visible{outline:2px solid var(--olive);outline-offset:-2px}
+@media(max-width:760px){
+  .app-window .app-shell-body{grid-template-columns:minmax(0,1fr);transition:none}
+  .app-sidebar{position:absolute;z-index:4;inset:0 auto 0 0;width:min(240px,90%);overflow-y:auto;overscroll-behavior:contain;box-shadow:12px 0 28px -16px rgba(0,0,0,.4);transition:translate 360ms var(--spring-soft),visibility 360ms}
+  .app-window.is-collapsed .app-sidebar{translate:-100% 0;visibility:hidden;pointer-events:none}
+  .app-main{border-top-left-radius:0;transition:opacity 200ms ease}
+  .app-window:not(.is-collapsed) .app-main{opacity:.45}
+  .app-main .demo-body,.app-view:not(.demo-body){padding:22px 16px}
+  .app-titlebar{padding:6px 10px;gap:8px}
+  .app-titlebar .window-dots{display:none}
+  .app-titlebar .demo-bar-label{gap:7px;font-size:12px;flex-wrap:wrap}
+  .app-icon-button{width:44px;height:44px;flex-shrink:0}
+  .app-nav-item{min-height:44px}
+  .app-view-head{flex-wrap:wrap;gap:12px}
+  .demo-tabs{flex-wrap:wrap;gap:4px}
+  .demo-tabs button{flex:1 1 calc(50% - 4px);min-height:44px;font-size:12px;padding:8px}
+  .lead-table{min-width:280px;font-size:12px}
+  .lead-table th,.lead-table small,.company small{font-size:11px}
+  .lead-open,.tiny-button,.channel-select button{min-height:44px;font-size:12px}
+  .demo-bottom,.sample-meta{flex-wrap:wrap}
+  .demo-bottom p{max-width:none;font-size:11px}
+  .kanban,.followup-grid{grid-template-columns:1fr;gap:12px}
+  .kanban-column{min-height:100px;padding:14px}
+  .kanban-column h4,.deal,.deal p,.deal .tag,.note-card p,.note-card small{font-size:12px}
+  .app-chart{gap:8px;padding-inline:12px}
+  .app-bar-row{grid-template-columns:80px 1fr 30px;gap:8px}
+  .app-activity li{grid-template-columns:18px 1fr}
+  .app-activity small{grid-column:2}
+}
 
 /* ── Lead map on the app's MapLibre engine ── */
 .map-gl{position:absolute;inset:0;z-index:0}
@@ -855,3 +884,28 @@ h2{font-size:clamp(32px,3.2vw,46px);line-height:1.08;letter-spacing:-.022em}
 .assistant-sound .is-off,.sound-off .assistant-sound .is-on{display:none}
 .sound-off .assistant-sound .is-off{display:inline}
 @media(max-width:480px){.assistant-bar-tools .sample-label{display:none}}
+
+/* Small screens use full-width previews, readable form text and touch-sized controls. */
+@media(max-width:760px),(pointer:coarse){
+  .mobile-menu nav{top:100%;max-height:calc(100dvh - 58px);padding-bottom:max(20px,env(safe-area-inset-bottom))}
+  .mobile-menu nav>a,.chapter-nav a,.film-moments button{min-height:44px}
+  .experience-workspace input,.experience-workspace select,.experience-workspace textarea,.contact-form input,.contact-form select,.contact-form textarea{font-size:16px}
+  .experience-record,.experience-response,.draft-copy{overflow-wrap:anywhere}
+  .assistant-window .demo-bar{flex-wrap:wrap}
+  .assistant-sound,.film-frame [data-clip-toggle],.visit-actions .button,.map-views button,.map-chips button,.map-card-actions button,.map-card-actions a{min-height:44px}
+  .site-header summary,.site-header .button,.app-nav-item{min-height:44px}
+  .app-icon-button{width:44px;height:44px}
+  .visit-actions{flex-wrap:wrap}
+  .visit-close{width:44px;height:44px;top:4px;right:4px}
+  .visit-card-head{padding-right:30px}
+  .map-pin{padding:10px}
+  .maplibregl-ctrl-group button{width:44px;height:44px}
+  .map-popup .maplibregl-popup-close-button{width:44px;height:44px}
+  .map-card{padding-right:16px}
+}
+@media(max-width:480px){
+  .experience-metrics{grid-template-columns:1fr}
+  .prompt{font-size:12px}
+  .note-card{padding:18px}
+}
+@media(prefers-reduced-motion:reduce){.app-sidebar,.app-main{transition:none}}

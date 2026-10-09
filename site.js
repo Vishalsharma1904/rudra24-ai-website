@@ -23,6 +23,8 @@
   const root = document.documentElement;
   const header = document.querySelector('.site-header');
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+  const mobileLayout = window.matchMedia('(max-width: 760px)');
+  mobileLayout.addEventListener('change', () => closeMenus());
 
   // Weighted wheel/trackpad scrolling on desktop only. Touch, keyboard and reduced motion stay native.
   if (window.Lenis && finePointer.matches && !motion.matches) {
@@ -405,6 +407,24 @@
     const views = all('.app-view', shell);
     const navItems = all('.app-nav-item', shell);
     const collapse = shell.querySelector('[data-app-collapse]');
+    const sidebar = shell.querySelector('.app-sidebar');
+    const setCollapsed = collapsed => {
+      shell.classList.toggle('is-collapsed', collapsed);
+      collapse.setAttribute('aria-expanded', String(!collapsed));
+      collapse.setAttribute('aria-label', collapsed ? 'Expand sidebar' : 'Collapse sidebar');
+      sidebar.inert = mobileLayout.matches && collapsed;
+      main.inert = mobileLayout.matches && !collapsed;
+    };
+    setCollapsed(mobileLayout.matches);
+    mobileLayout.addEventListener('change', () => setCollapsed(mobileLayout.matches));
+    shell.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && mobileLayout.matches && !shell.classList.contains('is-collapsed')) {
+        setCollapsed(true); collapse.focus();
+      }
+    });
+    document.addEventListener('click', event => {
+      if (mobileLayout.matches && !sidebar.contains(event.target) && !collapse.contains(event.target)) setCollapsed(true);
+    });
     let fromNav = false;
     const show = name => {
       const before = main.offsetHeight;
@@ -426,6 +446,7 @@
     };
     navItems.forEach(item => item.addEventListener('click', () => {
       select(item);
+      if (mobileLayout.matches) { setCollapsed(true); collapse.focus({ preventScroll: true }); }
       if (item.dataset.appView) { show(item.dataset.appView); return; }
       show('workflow');
       fromNav = true;
@@ -440,9 +461,7 @@
       navItems.find(item => item.textContent.trim() === 'Run Agent')?.click();
     });
     collapse?.addEventListener('click', () => {
-      const collapsed = shell.classList.toggle('is-collapsed');
-      collapse.setAttribute('aria-expanded', String(!collapsed));
-      collapse.setAttribute('aria-label', collapsed ? 'Expand sidebar' : 'Collapse sidebar');
+      setCollapsed(!shell.classList.contains('is-collapsed'));
     });
   });
 
