@@ -1,6 +1,6 @@
 # Rudra24 AI product website
 
-Eight standalone HTML pages with local fonts, the actual app logo and the supplied launch film. No app/backend APIs, credentials, third-party player or provider calls are needed at runtime. Publish this folder, not the repository root.
+Nine standalone HTML pages with local fonts, the actual app logo and the supplied launch film. No app/backend APIs, credentials, third-party player or provider calls are needed at runtime. Publish this folder, not the repository root.
 
 ## Local preview
 
@@ -18,6 +18,8 @@ Open `http://127.0.0.1:4178/index.html`. This optional localhost-only static ser
 - `experience.js`: expandable feature cards, validated local searches, sample CRM/candidate data, editable drafts and CSV exports.
 - `media.js`: muted autoplay, hover sound with policy fallback, pause control and one shared feature-hover preview.
 - `tools/build_site.py`: shared markup and all eight page bodies. Run `py -3.12 marketing/website/tools/build_site.py` after editing; it rewrites the generated HTML pages.
+- `tools/build_plans.py`: plan prices, capacity comparisons and eligible-offer copy. Run `python3 tools/build_plans.py` from this standalone website checkout after edits or after regenerating the other pages; it creates `plans.html` and restores plans navigation links.
+- `plans.css` and `plans.js`: compact pricing layout and synchronized feature expansion. One control updates all four cards. Without JavaScript, the complete feature lists remain visible. Promotional and referral discounts require team confirmation; plan actions prepare WhatsApp enquiries.
 
 Font licences are in `assets/fonts`. Figtree and EB Garamond match the app's Flow pairing. Preview surfaces use its Flow green preset: sidebar #034F46, canvas #FFFFEB. The original square app PNG is proportionally resized to 128px, preserving the mark. Essential descriptions and native navigation remain available without JavaScript.
 
