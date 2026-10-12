@@ -2,6 +2,8 @@
   'use strict';
   const comparison = document.querySelector('[data-plan-comparison]');
   if (!comparison) return;
+  // Leave features readable if matching pricing styles fail to load.
+  if (getComputedStyle(comparison).getPropertyValue('--plans-layout-version').trim() !== '2') return;
   const buttons = [...comparison.querySelectorAll('[data-plan-expand]')];
   const panels = [...comparison.querySelectorAll('.plan-feature-wrap')];
   let expanded = false;

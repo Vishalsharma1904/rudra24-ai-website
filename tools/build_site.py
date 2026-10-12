@@ -84,7 +84,7 @@ def header(current):
     </div></header>'''
 
 COMPANIES = [
-    ('Rudra24 Secure Digital Solutions', 'sales@leadgenai.rudra24secure.com', 'index.html', 'This website'),
+    ('Rudra24 Secure Digital Solutions', 'sales@leadgenai.rudra24secure.com', 'https://leadgenai.rudra24secure.com/index.html', 'leadgenai.rudra24secure.com'),
     ('Rudra24 Secure', 'rudra24securegroup@gmail.com', 'https://rudra24secure.com', 'rudra24secure.com'),
     ('Rudra24 Jobs', 'Rudra24Jobs@gmail.com', 'https://rudra24jobs.com', 'rudra24jobs.com'),
 ]

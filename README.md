@@ -1,6 +1,6 @@
 # Rudra24 AI product website
 
-Plans: [leadgenai.rudra24secure.com/plans.html](https://leadgenai.rudra24secure.com/plans.html). Contact Rudra24 Digital at `sales@leadgenai.rudra24secure.com`; Rudra24 Secure at `rudra24securegroup@gmail.com`.
+Website: [leadgenai.rudra24secure.com](https://leadgenai.rudra24secure.com/index.html). Plans: [leadgenai.rudra24secure.com/plans.html](https://leadgenai.rudra24secure.com/plans.html). Contact Rudra24 Digital at `sales@leadgenai.rudra24secure.com`; Rudra24 Secure at `rudra24securegroup@gmail.com`.
 
 Nine standalone HTML pages with local fonts, the actual app logo and the supplied launch film. No app/backend APIs, credentials, third-party player or provider calls are needed at runtime. Publish this folder, not the repository root.
 
@@ -22,6 +22,7 @@ Open `http://127.0.0.1:4178/index.html`. This optional localhost-only static ser
 - `tools/build_site.py`: shared markup and all eight page bodies. Run `py -3.12 marketing/website/tools/build_site.py` after editing; it rewrites the generated HTML pages.
 - `tools/build_plans.py`: plan prices, capacity comparisons and eligible-offer copy. Run `python3 tools/build_plans.py` from this standalone website checkout after edits or after regenerating the other pages; it creates `plans.html` and restores plans navigation links.
 - `plans.css` and `plans.js`: compact pricing layout and synchronized feature expansion. One control updates all four cards. Without JavaScript, the complete feature lists remain visible. Promotional and referral discounts require team confirmation; plan actions prepare WhatsApp enquiries.
+- Plans use content hashes in stylesheet and script filenames under `assets/generated/`, created by `tools/build_plans.py`. Commit these generated assets with the page so cached styles cannot be mixed with newer markup. Mobile cards scroll horizontally; desktop cards stay side by side. Netlify revalidates HTML and caches the immutable asset versions.
 
 Font licences are in `assets/fonts`. Figtree and EB Garamond match the app's Flow pairing. Preview surfaces use its Flow green preset: sidebar #034F46, canvas #FFFFEB. The original square app PNG is proportionally resized to 128px, preserving the mark. Essential descriptions and native navigation remain available without JavaScript.
 
