@@ -5,7 +5,7 @@
 .plans-hero h1 em { color: var(--forest); }
 .plans-hero p { max-width: 460px; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
 .plans-section { padding: 0 0 14px; }
-.plans-section > .wrap { --plans-layout-version: 2; padding: 18px; border-radius: 24px; background: var(--forest); color: var(--on-forest); box-shadow: var(--shadow-window); }
+.plans-section > .wrap { --plans-layout-version: 3; padding: 18px; border-radius: 24px; background: var(--forest); color: var(--on-forest); box-shadow: var(--shadow-window); }
 .plans-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
 .plans-toolkit-label { font-size: 13px; font-weight: 500; }
 .plans-toolbar p { margin-top: 1px; font-size: 11px; color: rgba(255,255,235,.7); }
@@ -145,4 +145,29 @@
  .plan-capacity p { min-height: 32px; }
  .plans-value { gap: 9px; }
  .offers-grid { gap: 8px; }
+}
+
+.plans-mobile-picker { display: none; }
+@media (max-width: 540px) {
+ .plans-toolbar { flex-direction: row; align-items: center; gap: 10px; }
+ .plans-toolbar > div { flex: 1; min-width: 0; }
+ .plan-expand-global { position: relative; width: 44px; padding: 0; border: 0; justify-content: center; flex-shrink: 0; }
+ .plan-expand-global [data-expand-label] { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+ .plans-mobile-picker { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 4px; margin-bottom: 8px; }
+ .plans-mobile-picker button { min-width: 0; min-height: 44px; padding: 5px 3px; border: 1px solid rgba(255,255,235,.22); border-radius: 9px; background: transparent; color: var(--on-forest); font-size: 11px; transition: background-color 180ms ease, color 180ms ease; }
+ .plans-mobile-picker button[aria-pressed="true"] { background: var(--on-forest); color: var(--forest); border-color: var(--on-forest); }
+ .plans-mobile-picker button:focus-visible { outline: 2px solid var(--on-forest); outline-offset: 2px; }
+ .plans-value .value-label { display: none; }
+ .plans-value { gap: 7px; }
+ .offers-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+ .offer-card { flex-direction: column; align-items: flex-start; padding: 8px 10px; }
+ .offer-card h3 { font-size: 12px; }
+ .offer-card p { display: none; }
+ .offer-card a { font-size: 11px; }
+ .plans-footer-inner { grid-template-columns: 1fr 1fr; gap: 8px 12px; }
+ .plans-footer-inner > .brand { grid-column: 1 / -1; }
+ .plans-footer-company, .plans-footer-contact { font-size: 11px; }
+}
+@media (prefers-reduced-motion: reduce) {
+ .plans-mobile-picker button { transition: none; }
 }

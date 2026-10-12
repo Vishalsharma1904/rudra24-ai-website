@@ -5,12 +5,24 @@
   const fine = matchMedia('(hover: hover) and (pointer: fine)');
   const film = document.querySelector('#launch-film');
   if (film) {
+    const phoneLayout = matchMedia('(max-width: 760px)');
+    const connection = navigator.connection;
+    const constrained = Boolean(connection?.saveData || /^(slow-)?2g$/.test(connection?.effectiveType || ''));
     const toggle = document.querySelector('[data-film-toggle]');
     const expand = document.querySelector('[data-film-expand]');
     const status = document.querySelector('[data-film-status]');
+    const dialog = document.querySelector('.film-dialog');
+    const bounds = film.getBoundingClientRect();
+    let inView = bounds.top < innerHeight && bounds.bottom > 0;
+    let playRequested = false;
     let pausedByUser = false, hovering = false, audioBlocked = false, failed = false, lastScroll = 0;
     const mute = () => { film.muted = true; };
-    const label = () => { toggle.textContent = film.paused ? 'Play video' : 'Pause video'; };
+    const label = () => {
+      toggle.textContent = film.paused ? (phoneLayout.matches ? 'Play' : 'Play video') : (phoneLayout.matches ? 'Pause' : 'Pause video');
+      toggle.setAttribute('aria-label', film.paused ? 'Play product walkthrough' : 'Pause product walkthrough');
+      toggle.setAttribute('aria-pressed', String(!film.paused));
+      expand.textContent = phoneLayout.matches ? 'Full view' : 'Expand film';
+    };
     const fail = () => {
       failed = true;
       status.hidden = false;
@@ -20,13 +32,14 @@
     };
     const quietPlay = () => {
       mute();
-      if (failed || pausedByUser || document.hidden) return;
+      if (failed || pausedByUser || document.hidden || (!inView && !dialog.open) || (constrained && !playRequested)) return;
       film.play().catch(error => {
         if (error.name === 'NotSupportedError') fail();
         else if (error.name !== 'AbortError') label();
       });
     };
     const audiblePlay = () => {
+      playRequested = true;
       film.muted = false;
       film.play().catch(error => {
         if (error.name === 'NotSupportedError') { fail(); return; }
@@ -38,16 +51,20 @@
     // never has to shrink 1920px footage itself — its quick downscale is what blurs small UI text.
     const sizes = [640, 960, 1280, 1920];
     let filmSize = 0;
-    const sizeFor = width => sizes.find(size => size >= width * (window.devicePixelRatio || 1) * 0.92) || 1920;
+    const sizeFor = width => phoneLayout.matches && !dialog.open ? 640 : sizes.find(size => size >= width * (window.devicePixelRatio || 1) * 0.92) || 1920;
     const useSize = size => {
-      if (size <= filmSize) return; // only ever upgrade; never swap to a softer file mid-visit
+      const mobile = phoneLayout.matches && !dialog.open;
+      const source = mobile ? 'assets/video/launch-mobile.mp4' : 'assets/video/launch-film' + (size === 1920 ? '' : '-' + size) + '.mp4';
+      if (source === film.getAttribute('src')) return;
+      if (!mobile && size <= filmSize && !film.getAttribute('src')?.includes('launch-mobile')) return;
       const time = film.currentTime, playing = !film.paused;
       filmSize = size;
-      film.src = 'assets/video/launch-film' + (size === 1920 ? '' : '-' + size) + '.mp4';
+      film.src = source;
       film.addEventListener('loadedmetadata', () => { if (time) film.currentTime = time; if (playing) quietPlay(); }, { once: true });
     };
+    if (phoneLayout.matches) film.poster = 'assets/video/launch-mobile-poster.jpg';
     useSize(sizeFor(film.clientWidth || 640));
-    window.addEventListener('resize', () => useSize(sizeFor(film.clientWidth)));
+    window.addEventListener('resize', () => { useSize(sizeFor(film.clientWidth)); label(); });
     const DEMO_START = 19.5; // the logo/title intro is already on the page; open on the product
     film.loop = false;
     const toDemo = () => { if (film.currentTime < DEMO_START - 0.5) film.currentTime = DEMO_START; };
@@ -58,12 +75,22 @@
     film.muted = true;
     document.querySelector('#film-hint').textContent = fine.matches
       ? 'The workspace in action · Hover for sound'
-      : 'The workspace in action · Tap the film for sound';
-    if (reduced.matches) {
+      : 'Tap video for sound';
+    film.autoplay = !reduced.matches && !constrained;
+    if (reduced.matches || constrained) {
       film.autoplay = false; film.pause(); label();
-      document.querySelector('#film-hint').textContent = 'The workspace in action · Play when you’re ready';
+      document.querySelector('#film-hint').textContent = 'Play when you’re ready';
     }
     else quietPlay();
+    label();
+    // Pause playback when the walkthrough leaves the viewport.
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(entries => {
+        inView = entries[0].isIntersecting;
+        if (!inView && !dialog.open) { mute(); film.pause(); }
+        else if (!reduced.matches || playRequested) quietPlay();
+      }, { threshold: 0.03, rootMargin: '60px 0px' }).observe(film.closest('.launch-media'));
+    }
     // Sound follows the cursor: on while the pointer rests on the film, off when it leaves; the film keeps playing.
     // Browsers only allow sound after the visitor has clicked or pressed a key somewhere on the page once.
     let pointerX = -1, pointerY = -1;
@@ -94,6 +121,7 @@
     const gestureSound = () => {
       if (!film.muted) { mute(); return; }
       pausedByUser = false;
+      playRequested = true;
       audioBlocked = false;
       audiblePlay();
     };
@@ -102,24 +130,24 @@
       if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); gestureSound(); }
     });
     // Move the same original-resolution player; never run two copies with audio.
-    const dialog = document.querySelector('.film-dialog');
     const home = document.createComment('launch film position');
     film.before(home);
     expand.addEventListener('click', () => {
       mute(); dialog.showModal(); window.lenis?.stop(); dialog.querySelector('[data-film-slot]').append(film); useSize(sizeFor(film.clientWidth));
+      film.controls = phoneLayout.matches;
       if (!pausedByUser && !reduced.matches) quietPlay();
       dialog.querySelector('[data-film-close]').focus();
     });
     document.querySelector('[data-film-close]').addEventListener('click', () => dialog.close());
     dialog.addEventListener('close', () => {
       window.lenis?.start();
-      mute(); home.after(film); if (!pausedByUser && !reduced.matches) quietPlay(); expand.focus();
+      mute(); home.after(film); film.controls = false; useSize(sizeFor(film.clientWidth)); if (!pausedByUser && (!reduced.matches || playRequested)) quietPlay(); expand.focus();
     });
     dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
     toggle.addEventListener('click', () => {
       pausedByUser = !film.paused;
       if (pausedByUser) { mute(); film.pause(); }
-      else quietPlay();
+      else { playRequested = true; quietPlay(); }
       label();
     });
     film.addEventListener('play', label);
@@ -131,7 +159,6 @@
       }
     });
     film.addEventListener('error', fail);
-    film.querySelector('source').addEventListener('error', fail);
     document.addEventListener('visibilitychange', () => {
       mute();
       if (document.hidden) film.pause();

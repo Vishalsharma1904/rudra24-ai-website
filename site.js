@@ -24,14 +24,15 @@
   const header = document.querySelector('.site-header');
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
   const mobileLayout = window.matchMedia('(max-width: 760px)');
+  const homePage = document.body.dataset.page === 'index';
   mobileLayout.addEventListener('change', () => closeMenus());
 
   // Weighted wheel/trackpad scrolling on desktop only. Touch, keyboard and reduced motion stay native.
   if (window.Lenis && finePointer.matches && !motion.matches) {
     window.lenis = new window.Lenis({
-      autoRaf: true, lerp: 0.042, wheelMultiplier: 0.7, smoothWheel: true, syncTouch: false, // heavier, slower glide
+      autoRaf: true, lerp: homePage ? 0.065 : 0.042, wheelMultiplier: homePage ? 0.9 : 0.7, smoothWheel: true, syncTouch: false,
       stopInertiaOnNavigate: true,
-      anchors: { duration: 1.7 }, // in-page links glide to their section (respects scroll-margin-top)
+      anchors: { duration: homePage ? 1.25 : 1.7 }, // in-page links glide to their section (respects scroll-margin-top)
       prevent: node => node.matches('textarea, select, dialog, .experience-records, .mobile-menu nav, .menu-panel')
     });
   }
@@ -545,7 +546,7 @@
   const motionClass = scrollLinked ? 'scroll-reveal' : 'motion-ready';
   const measure = () => {
     const vw = window.innerWidth, vh = window.innerHeight, rows = new Map();
-    const travel = Math.round(Math.max(72, Math.min(vw * 0.11, 160)));
+    const travel = Math.round(homePage ? (vw < 760 ? 28 : Math.min(vw * 0.065, 100)) : Math.max(72, Math.min(vw * 0.11, 160)));
     reveals.forEach(element => {
       // Resting position = drawn position minus whatever slide is currently applied.
       const box = element.getBoundingClientRect();
