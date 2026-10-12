@@ -1,5 +1,7 @@
 # Rudra24 AI product website
 
+Plans: [leadgenai.rudra24secure.com/plans.html](https://leadgenai.rudra24secure.com/plans.html). Contact Rudra24 Digital at `sales@leadgenai.rudra24secure.com`; Rudra24 Secure at `rudra24securegroup@gmail.com`.
+
 Nine standalone HTML pages with local fonts, the actual app logo and the supplied launch film. No app/backend APIs, credentials, third-party player or provider calls are needed at runtime. Publish this folder, not the repository root.
 
 ## Local preview
