@@ -29,7 +29,6 @@ def build_landing():
     html = html.replace('>Talk to our team<svg', '>Talk to us<svg', 1)
     html = html.replace('class="button secondary" href="#workspace">Explore the workspace', 'class="button secondary" href="#film">Watch demo', 1)
     html = html.replace('tabindex="0" autoplay muted loop controls playsinline preload="metadata"', 'tabindex="0" muted loop controls playsinline preload="none"')
-    html = html.replace('poster="assets/video/launch-poster.jpg"', 'poster="assets/video/launch-mobile-poster.jpg"', 1)
     source = '<source src="assets/video/launch-film.mp4#t=19.5" type="video/mp4">'
     if MOBILE_SOURCE not in html:
         html = html.replace(source, MOBILE_SOURCE + source, 1)

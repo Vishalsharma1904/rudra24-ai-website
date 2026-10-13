@@ -9,7 +9,7 @@ body[data-page="index"] .launch-copy .subcopy { max-width: 620px; margin: 14px a
 body[data-page="index"] .launch-copy .actions { flex-direction: row; justify-content: center; align-items: center; gap: 10px; margin-top: 18px; }
 body[data-page="index"] .launch-copy .button { min-height: 46px; }
 body[data-page="index"] .launch-copy .hero-note { margin-top: 10px; }
-body[data-page="index"] .launch-media.hero-preview { width: min(100%, 940px); max-width: none; margin: 0; align-self: center; }
+body[data-page="index"] .launch-media.hero-preview { width: min(100%, 1120px); max-width: none; margin: 0; align-self: center; }
 /* Keep the walkthrough directly on the page, with only a light edge shadow. */
 body[data-page="index"] .launch-hero { position: relative; isolation: isolate; }
 body[data-page="index"] .launch-copy .eyebrow { text-transform: none; letter-spacing: .02em; font-size: 12px; }
@@ -32,7 +32,7 @@ body[data-page="index"] #launch-film { display: block; width: 100%; height: auto
 body[data-page="index"] .film-caption { margin-top: 6px; gap: 10px; }
 body[data-page="index"] .film-actions { gap: 8px; }
 body[data-page="index"] .film-actions button { min-height: 44px; padding: 8px 6px; }
-body[data-page="index"] .film-dialog { width: min(960px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); margin: auto; padding: 14px; }
+body[data-page="index"] .film-dialog { width: min(1280px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); margin: auto; padding: 14px; }
 body[data-page="index"] .film-dialog #launch-film { max-height: calc(100dvh - 145px); width: 100%; object-fit: contain; }
 body[data-page="index"] .film-dialog p { margin-top: 10px; font-size: 11px; }
 body[data-page="index"] .chapter-nav { padding-block: 12px; gap: 8px; }
