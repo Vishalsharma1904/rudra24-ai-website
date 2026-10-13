@@ -51,7 +51,7 @@
     // never has to shrink 1920px footage itself — its quick downscale is what blurs small UI text.
     const sizes = [640, 960, 1280, 1920];
     let filmSize = 0;
-    const sizeFor = width => phoneLayout.matches && !dialog.open ? 640 : sizes.find(size => size >= width * (window.devicePixelRatio || 1) * 0.92) || 1920;
+    const sizeFor = width => phoneLayout.matches && !dialog.open ? 640 : sizes.find(size => size >= width * (window.devicePixelRatio || 1)) || 1920;
     const useSize = size => {
       const mobile = phoneLayout.matches && !dialog.open;
       const source = mobile ? 'assets/video/launch-mobile.mp4' : 'assets/video/launch-film' + (size === 1920 ? '' : '-' + size) + '.mp4';
