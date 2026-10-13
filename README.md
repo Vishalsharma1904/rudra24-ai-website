@@ -1,3 +1,12 @@
+## Current standalone workflow — 13 October 2026
+
+- Official Apache-licensed Anthropic skills: `.agents/skills/`; catalog, source commit and compatibility notes: `.agents/README.md`. Open a new project chat if the skills picker needs refreshing.
+- Refresh plans: `python tools/build_plans.py`.
+- Refresh landing page and shared asset versions: `python tools/build_landing.py`.
+- Prepare hosting files: `python tools/publish_site.py`. Netlify publishes `dist/`, excluding agent skills and development files.
+- Local preview: `python tools/serve_site.py --port 8765`.
+- The actual AI app, real authentication and live payments are not part of the static website repository. Interactive examples use fictional data; purchase actions currently contact the team.
+
 # Rudra24 AI product website
 
 Website: [leadgenai.rudra24secure.com](https://leadgenai.rudra24secure.com/index.html). Plans: [leadgenai.rudra24secure.com/plans.html](https://leadgenai.rudra24secure.com/plans.html). Contact Rudra24 Digital at `sales@leadgenai.rudra24secure.com`; Rudra24 Secure at `rudra24securegroup@gmail.com`.

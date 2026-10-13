@@ -14,6 +14,19 @@ def build_landing():
     html = home.read_text()
     html = html.replace('class="hero launch-hero"', 'class="hero launch-hero landing-centered"')
     html = html.replace(OLD_COPY, HERO_COPY)
+    html = html.replace('>Talk to us<svg', '>Explore plans<svg', 1)
+    # The first hero action leads directly to the published pricing page.
+    hero_start = html.index('<div class="actions hero-copy">')
+    hero_end = html.index('</div>', hero_start)
+    hero_actions = html[hero_start:hero_end]
+    hero_actions = re.sub(r'href="https://wa.me/[^\"]+" target="_blank" rel="noopener noreferrer"', 'href="plans.html"', hero_actions, count=1)
+    html = html[:hero_start] + hero_actions + html[hero_end:]
+    stage = '<div class="film-stage-heading"><span><span class="film-stage-mark" aria-hidden="true"></span>Rudra24 AI</span><span>Workspace walkthrough</span></div>'
+    if 'class="film-stage-heading"' not in html:
+        html = html.replace('id="film"><video', 'id="film">' + stage + '<video', 1)
+    html = html.replace('Live app preview', 'Interactive workspace demo')
+    html = html.replace('Live preview</a>', 'Workspace demo</a>')
+    html = html.replace('A working copy of Rudra24 AI. Click the sidebar and the tabs to follow one lead from search to follow-up.', 'Explore the workflow with fictional data. Use the sidebar and tabs to follow a lead from search to follow-up.')
     # Only the hero's first CTA pair changes; later calls to action retain their labels.
     html = html.replace('>Talk to our team<svg', '>Talk to us<svg', 1)
     html = html.replace('class="button secondary" href="#workspace">Explore the workspace', 'class="button secondary" href="#film">Watch demo', 1)
