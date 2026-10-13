@@ -64,7 +64,10 @@
     };
     if (phoneLayout.matches) film.poster = 'assets/video/launch-mobile-poster.jpg';
     useSize(sizeFor(film.clientWidth || 640));
-    window.addEventListener('resize', () => { useSize(sizeFor(film.clientWidth)); label(); });
+    window.addEventListener('resize', () => {
+      film.poster = phoneLayout.matches ? 'assets/video/launch-mobile-poster.jpg' : 'assets/video/launch-poster.jpg';
+      useSize(sizeFor(film.clientWidth)); label();
+    });
     const DEMO_START = 19.5; // the logo/title intro is already on the page; open on the product
     film.loop = false;
     const toDemo = () => { if (film.currentTime < DEMO_START - 0.5) film.currentTime = DEMO_START; };
