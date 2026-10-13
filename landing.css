@@ -8,7 +8,6 @@ body[data-page="index"] .launch-copy h1 span { white-space: normal; }
 body[data-page="index"] .launch-copy .subcopy { max-width: 620px; margin: 14px auto 0; font-size: 16px; line-height: 1.55; }
 body[data-page="index"] .launch-copy .actions { flex-direction: row; justify-content: center; align-items: center; gap: 10px; margin-top: 18px; }
 body[data-page="index"] .launch-copy .button { min-height: 46px; }
-body[data-page="index"] .launch-copy .hero-note { margin-top: 10px; }
 body[data-page="index"] .launch-media.hero-preview { width: min(100%, 1120px); max-width: none; margin: 0; align-self: center; }
 /* Keep the walkthrough directly on the page, with only a light edge shadow. */
 body[data-page="index"] .launch-hero { position: relative; isolation: isolate; }
@@ -47,7 +46,6 @@ body[data-page="index"] .reveal[data-side="center"] { --dy: 36px; }
   body[data-page="index"] .launch-grid { gap: 18px; }
   body[data-page="index"] .launch-copy h1 { font-size: clamp(40px, 8.5vw, 58px); }
   body[data-page="index"] .launch-copy .subcopy { font-size: 14px; line-height: 1.5; max-width: 500px; margin-top: 12px; }
-  body[data-page="index"] .launch-copy .hero-note { display: none; }
   body[data-page="index"] .launch-copy .eyebrow { margin-bottom: 8px; font-size: 10px; line-height: 1.5; }
   body[data-page="index"] .film-caption { flex-wrap: nowrap; align-items: center; font-size: 11px; }
   body[data-page="index"] .film-caption > span { flex: 1; min-width: 0; }
@@ -148,7 +146,7 @@ body[data-page="index"] .launch-grid {
 body[data-page="index"] .launch-copy {
   position: absolute;
   z-index: 2;
-  top: calc(96px + clamp(100px, 13svh, 138px));
+  top: clamp(100px, calc(7svh + 52px), 114px);
   left: 50%;
   translate: -50% 0;
   width: min(92%, 940px);
@@ -157,7 +155,7 @@ body[data-page="index"] .launch-copy {
 }
 body[data-page="index"] .launch-copy .eyebrow {
   justify-content: center;
-  margin-bottom: 14px;
+  margin-bottom: 6px;
   color: #D1DCC9;
   font-size: 12px;
   letter-spacing: .02em;
@@ -166,26 +164,27 @@ body[data-page="index"] .launch-copy .eyebrow {
 body[data-page="index"] .launch-copy h1 {
   max-width: 940px;
   margin-inline: auto;
-  font-size: clamp(52px, 6.2vw, 86px);
-  line-height: .98;
+  font-size: clamp(54px, 5.2vw, 68px);
+  line-height: .96;
   letter-spacing: -.045em;
 }
+body[data-page="index"] .launch-copy h1 br { display: none; }
 body[data-page="index"] .launch-copy h1 span { white-space: normal; }
 body[data-page="index"] .launch-copy h1 em { color: #C4D9B7; }
 body[data-page="index"] .launch-copy .subcopy {
-  max-width: 720px;
-  margin: 18px auto 0;
+  max-width: 780px;
+  margin: 6px auto 0;
   color: #D3D8CE;
-  font-size: 16px;
-  line-height: 1.55;
+  font-size: 15px;
+  line-height: 1.35;
 }
 body[data-page="index"] .launch-copy .actions {
   justify-content: center;
   gap: 12px;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 body[data-page="index"] .launch-copy .button {
-  min-height: 48px;
+  min-height: 44px;
   border-radius: 999px;
   padding-inline: 22px;
 }
@@ -206,24 +205,16 @@ body[data-page="index"] .launch-copy .button.secondary:hover {
   background: rgba(245, 243, 232, .08);
   border-color: rgba(245, 243, 232, .72);
 }
-body[data-page="index"] .launch-copy .hero-note {
-  display: block;
-  max-width: 620px;
-  margin: 11px auto 0;
-  color: #B9C5B7;
-  font-size: 12px;
-  line-height: 1.65;
-}
 body[data-page="index"] .landing-orb-stage {
   --orb-shift-x: 23vw;
   --orb-shift-y: 18vh;
   --orb-scale: .72;
   position: absolute;
   z-index: 1;
-  top: 63svh;
+  top: 76svh;
   left: 50%;
   translate: -50% -50%;
-  width: min(54vw, 520px);
+  width: min(46vw, 420px);
   aspect-ratio: 1;
   filter: drop-shadow(0 20px 48px rgba(131, 178, 153, .16));
 }
@@ -355,22 +346,22 @@ body[data-page="index"] .faq-list details p { animation: faq-answer-in 250ms var
     color: var(--on-forest);
   }
   body[data-page="index"] .launch-hero { margin-top: -88px; }
-  body[data-page="index"] .launch-copy { top: calc(88px + clamp(96px, 12svh, 124px)); width: min(92%, 760px); }
-  body[data-page="index"] .launch-copy h1 { font-size: clamp(48px, 8.4vw, 72px); }
-  body[data-page="index"] .landing-orb-stage { --orb-shift-x: 18vw; --orb-shift-y: 18vh; --orb-scale: .72; top: 63svh; width: min(68vw, 500px); }
+  body[data-page="index"] .launch-copy { top: clamp(100px, 12svh, 122px); width: min(92%, 760px); }
+  body[data-page="index"] .launch-copy h1 { font-size: clamp(50px, 5.6vw, 62px); }
+  body[data-page="index"] .landing-orb-stage { --orb-shift-x: 18vw; --orb-shift-y: 6vh; --orb-scale: .72; top: 76svh; width: min(56vw, 420px); }
   body[data-page="index"] .landing-film-section .section-head { display: flex; }
 }
 @media (max-width: 760px) {
   body[data-page="index"] .header-inner { height: 80px; }
   body[data-page="index"] .mobile-menu nav { top: 80px; }
   body[data-page="index"] .launch-hero { margin-top: -80px; }
-  body[data-page="index"] .launch-copy { top: calc(80px + clamp(92px, 12svh, 118px)); width: calc(100% - 32px); }
-  body[data-page="index"] .launch-copy h1 { font-size: clamp(44px, 9vw, 64px); }
+  body[data-page="index"] .launch-copy { top: clamp(92px, 11svh, 108px); width: calc(100% - 32px); }
+  body[data-page="index"] .launch-copy h1 { font-size: clamp(42px, 7vw, 54px); }
+  body[data-page="index"] .launch-copy h1 br { display: initial; }
   body[data-page="index"] .launch-copy .eyebrow { margin-bottom: 12px; font-size: 11px; }
-  body[data-page="index"] .launch-copy .subcopy { max-width: 500px; margin-top: 14px; font-size: 14px; line-height: 1.5; }
-  body[data-page="index"] .launch-copy .actions { margin-top: 16px; }
-  body[data-page="index"] .launch-copy .hero-note { max-width: 360px; margin-top: 9px; font-size: 11px; }
-  body[data-page="index"] .landing-orb-stage { --orb-shift-x: 15vw; --orb-shift-y: 18vh; --orb-scale: .74; top: 63svh; width: min(70vw, 320px); }
+  body[data-page="index"] .launch-copy .subcopy { max-width: 500px; margin-top: 10px; font-size: 14px; line-height: 1.4; }
+  body[data-page="index"] .launch-copy .actions { margin-top: 12px; }
+  body[data-page="index"] .landing-orb-stage { --orb-shift-x: 14vw; --orb-shift-y: 2vh; --orb-scale: .74; top: 70svh; width: min(68vw, 300px); }
   body[data-page="index"] .landing-orb { width: 84%; }
   body[data-page="index"] .landing-film-section .section-head { display: block; }
   body[data-page="index"] .landing-film-section .section-head p { margin-top: 16px; }
@@ -381,9 +372,14 @@ body[data-page="index"] .faq-list details p { animation: faq-answer-in 250ms var
   body[data-page="index"] .launch-copy h1 { font-size: clamp(40px, 10.5vw, 48px); }
   body[data-page="index"] .launch-copy .actions { width: 100%; gap: 8px; }
   body[data-page="index"] .launch-copy .button { flex: 0 0 auto; min-width: 0; padding-inline: 17px; font-size: 12px; }
-  body[data-page="index"] .launch-copy .hero-note { max-width: 320px; }
-  body[data-page="index"] .landing-orb-stage { width: min(70vw, 300px); }
+  body[data-page="index"] .landing-orb-stage { width: min(68vw, 280px); }
   body[data-page="index"] .landing-film-section .section-head h2 { font-size: 42px; }
+}
+@media (max-height: 650px) and (min-width: 481px) {
+  body[data-page="index"] .landing-orb-stage { top: 84svh; }
+}
+@media (max-width: 480px) and (max-height: 700px) {
+  body[data-page="index"] .landing-orb-stage { top: 80svh; }
 }
 @media (prefers-reduced-motion: reduce) {
   body[data-page="index"] .launch-hero::before,
@@ -391,6 +387,5 @@ body[data-page="index"] .faq-list details p { animation: faq-answer-in 250ms var
   body[data-page="index"] .launch-copy,
   body[data-page="index"] .launch-copy .eyebrow,
   body[data-page="index"] .launch-copy .subcopy,
-  body[data-page="index"] .launch-copy .hero-note,
   body[data-page="index"] .launch-copy h1 em { animation: none; }
 }
