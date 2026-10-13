@@ -133,6 +133,23 @@
     script.src = 'orb.js'; script.onload = resolve; script.onerror = reject;
     document.head.append(script);
   }));
+  const landingOrb = document.querySelector('[data-landing-orb]');
+  if (landingOrb) {
+    const mountLandingOrb = () => {
+      if (landingOrb.dataset.ready) return;
+      landingOrb.dataset.ready = 'true';
+      loadOrb().then(() => window.StrandsOrb.create(landingOrb)).catch(() => {});
+    };
+    if ('IntersectionObserver' in window) {
+      const landingOrbObserver = new IntersectionObserver(entries => {
+        if (entries.some(entry => entry.isIntersecting)) {
+          landingOrbObserver.disconnect();
+          mountLandingOrb();
+        }
+      }, { rootMargin: '120px' });
+      landingOrbObserver.observe(landingOrb);
+    } else mountLandingOrb();
+  }
   // Sound for the assistant window, made in the browser (no audio files): a soft ambient pad for the orb that
   // breathes and shifts with its state, quiet key clicks while the question is typed, a tiny "send", a two-note
   // chime when Rudra answers and soft ticks as the words appear. It fades in only while the window is on screen

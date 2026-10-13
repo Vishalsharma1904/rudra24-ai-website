@@ -57,7 +57,7 @@ def check():
             source=(SITE/name).read_text(encoding='utf-8')
             if not re.search(r'<fieldset\s+data-contact-fields\s+disabled>',source):
                 failures.append('Contact form must disable inputs in static HTML to prevent no-JS submission')
-    css=''.join((SITE/name).read_text(encoding='utf-8') for name in ['site.css','refinement.css','maps.css'])
+    css=''.join((SITE/name).read_text(encoding='utf-8') for name in ['site.css','refinement.css','landing.css','maps.css'])
     for asset in re.findall(r"url\(['\"]?([^)'\"]+)",css):
         if not (SITE/asset).exists(): failures.append(f'CSS: missing {asset}')
     for token in ['#FAF9F5','#FFFFFF','#034F46','#FFFFEB','#191918','prefers-reduced-motion']:
@@ -69,13 +69,14 @@ def check():
     for name in EXPECTED:
         source=(SITE/f'{name}.html').read_text(encoding='utf-8')
         if '>rudra24<' in source: failures.append(f'{name}: lowercase brand wordmark')
-        if 'refinement.css' not in source: failures.append(f'{name}: missing shared refinement stylesheet')
+        if not re.search(r'href="(?:refinement\.css|assets/generated/refinement\.[a-f0-9]+\.css)"', source):
+            failures.append(f'{name}: missing shared refinement stylesheet')
     home=(SITE/'index.html').read_text(encoding='utf-8')
-    if '<video id="launch-film" tabindex="0" autoplay muted loop controls playsinline preload="metadata"' not in home:
-        failures.append('Launch film needs muted looping autoplay and native no-JS controls')
+    if '<video id="launch-film" tabindex="0" muted loop controls playsinline preload="none"' not in home:
+        failures.append('Launch film needs native controls and must defer offscreen media loading')
     if 'film-card' in home or 'film-screen' in home or 'Play the film' in home:
         failures.append('The hero film must sit directly on the page without an outer player card')
-    if 'data-film-toggle' not in home: failures.append('Autoplay needs an accessible pause control')
+    if 'data-film-toggle' not in home: failures.append('Launch film needs an accessible pause control')
     if 'data-film-sound' in home or 'Enable hover sound' in js: failures.append('Separate sound enable button must be removed')
     if 'data-film-expand' not in home: failures.append('Film needs a larger original-resolution view')
     product=(SITE/'product.html').read_text(encoding='utf-8')
@@ -89,6 +90,19 @@ def check():
     for key in ['leads','calling','outreach','crm','assistant']:
         if not (SITE/f'assets/video/{key}.mp4').exists(): failures.append(f'Missing feature excerpt {key}')
     if 'data-film-fallback hidden' not in home: failures.append('Missing accessible film error fallback')
+    if 'data-landing-orb' not in home or 'landing-intro' not in home or 'landing-orb-orbit' in home:
+        failures.append('Home needs the centered app orb without decorative planets or orbit lines')
+    if '<section class="section landing-film-section" id="film"' not in home:
+        failures.append('Launch film needs its own light-page section')
+    if 'class="button small plans-cta" href="plans.html"' not in home:
+        failures.append('Explore plans should be the header primary action')
+    if home.count('class="faq-toggle"') != 4:
+        failures.append('Every home FAQ question needs an animated disclosure cue')
+    landing_css=(SITE/'landing.css').read_text(encoding='utf-8')
+    if 'landing-orb-to-rail' not in landing_css or 'animation-range: exit 0% exit 42%' not in landing_css:
+        failures.append('The centered app orb must travel to the upper-right before the dark reveal')
+    if 'animation-range: exit 55% exit 100%' not in landing_css:
+        failures.append('The dark opening must remain through the orb landing and then reveal the light page')
     if failures:
         print('\n'.join('FAIL '+item for item in failures))
         raise SystemExit(1)
