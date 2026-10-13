@@ -9,16 +9,13 @@ body[data-page="index"] .launch-copy .subcopy { max-width: 620px; margin: 14px a
 body[data-page="index"] .launch-copy .actions { flex-direction: row; justify-content: center; align-items: center; gap: 10px; margin-top: 18px; }
 body[data-page="index"] .launch-copy .button { min-height: 46px; }
 body[data-page="index"] .launch-copy .hero-note { margin-top: 10px; }
-body[data-page="index"] .launch-media.hero-preview { width: min(100%, 820px); max-width: none; margin: 0; align-self: center; }
-/* A quiet product stage: the walkthrough is the visual focal point. */
+body[data-page="index"] .launch-media.hero-preview { width: min(100%, 940px); max-width: none; margin: 0; align-self: center; }
+/* Keep the walkthrough directly on the page, with only a light edge shadow. */
 body[data-page="index"] .launch-hero { position: relative; isolation: isolate; }
 body[data-page="index"] .launch-copy .eyebrow { text-transform: none; letter-spacing: .02em; font-size: 12px; }
 body[data-page="index"] .launch-copy .button { border-radius: 999px; padding-inline: 24px; }
-body[data-page="index"] .launch-media.hero-preview { padding: 8px; border: 1px solid rgba(3,79,70,.16); border-radius: 26px; background: #F1F3E6; box-shadow: 0 24px 50px -26px rgba(3,79,70,.32); }
-.film-stage-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 7px 10px 12px; color: var(--forest); font-size: 11px; }
-.film-stage-heading > span:first-child { display: flex; align-items: center; gap: 8px; font-weight: 550; }
-.film-stage-heading > span:last-child { color: var(--muted); }
-.film-stage-mark { display: block; width: 8px; height: 8px; border-radius: 50%; background: var(--forest); box-shadow: 0 0 0 3px rgba(3,79,70,.09); }
+body[data-page="index"] .launch-media.hero-preview { padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+body[data-page="index"] #launch-film { box-shadow: 0 2px 5px rgba(28,33,29,.055), 0 12px 24px -17px rgba(28,33,29,.19); }
 body[data-page="index"] .launch-media .film-caption { padding-inline: 8px; }
 body[data-page="index"] #film-summary .section-head { max-width: 680px; }
 body[data-page="index"] .feature-card { box-shadow: none; }
@@ -57,8 +54,7 @@ body[data-page="index"] .reveal[data-side="center"] { --dy: 36px; }
   body[data-page="index"] .film-actions { flex-wrap: nowrap; flex-shrink: 0; gap: 4px; }
   body[data-page="index"] .film-actions button { font-size: 11px; padding-inline: 4px; }
   body[data-page="index"] #launch-film { border-radius: 16px; }
-  body[data-page="index"] .launch-media.hero-preview { padding: 5px; border-radius: 20px; box-shadow: 0 16px 30px -20px rgba(3,79,70,.28); }
-  .film-stage-heading { padding: 5px 7px 9px; font-size: 10px; }
+  body[data-page="index"] .launch-media.hero-preview { padding: 0; border: 0; border-radius: 0; box-shadow: none; }
   body[data-page="index"] .launch-media .film-caption { padding-inline: 4px; }
   body[data-page="index"] .reveal[data-side="center"] { --dy: 20px; }
   body[data-page="index"] .section { padding-block: 44px; }
